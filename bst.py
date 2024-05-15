@@ -165,23 +165,33 @@ class BST:
 
         currNode = self._root
 
-        if currNode.value < newNode.value and currNode.right is None:
-            currNode.right = newNode
-        elif currNode.value > newNode.value and currNode.left is None:
-            currNode.left = newNode
-        else:
-            while currNode.left is not None or currNode.right is not None:
-                if newNode.value > currNode.value and currNode.right is not None:
-                    currNode = currNode.right
-                elif newNode.value < currNode.value and currNode.left is not None:
-                    currNode = currNode.left
+        # Iterate through tree
+        while currNode.left is not None or currNode.right is not None:
 
-                if newNode.value < currNode.value and currNode.left is None:
-                    currNode.left = newNode
-                    break
-                elif newNode.value > currNode.value and currNode.right is None:
-                    currNode.right = newNode
-                    break
+            # While in tree, check for open positions for nodes
+            if newNode.value == currNode.value and currNode.right is None:
+                currNode.right = newNode
+                break
+            elif newNode.value < currNode.value and currNode.left is None:
+                currNode.left = newNode
+                break
+            elif newNode.value > currNode.value and currNode.right is None:
+                currNode.right = newNode
+                break
+
+            # Move the current position to next node
+            if newNode.value == currNode.value and currNode.right is not None:
+                currNode = currNode.right
+            elif newNode.value < currNode.value and currNode.left is not None:
+                currNode = currNode.left
+            elif newNode.value > currNode.value and currNode.right is not None:
+                currNode = currNode.right
+
+        # At end of list and both nodes are none
+        if newNode.value < currNode.value and currNode.left is None:
+            currNode.left = newNode
+        elif newNode.value > currNode.value or newNode.value == currNode.value and currNode.right is None:
+            currNode.right = newNode
 
     def remove(self, value: object) -> bool:
         """
@@ -219,9 +229,32 @@ class BST:
 
     def contains(self, value: object) -> bool:
         """
-        TODO: Write your implementation
+        Starts at root of tree and recursively iterates through tree looking for value
         """
-        pass
+
+
+
+        '''parentNode = self._root
+        currNode = self._root
+        #valuesChecked = Stack()
+
+        while currNode.left is not None or currNode.right is not None:
+            #if valuesChecked.is_empty() is False:
+                #for nodeValues in valuesChecked:
+
+            if currNode.left is not None:
+                if currNode.value == value:
+                    return True
+                else:
+                    parentNode = currNode
+                    currNode = currNode.left
+            if currNode.right is not None:
+                if currNode.value == value:
+                    return True
+                else:
+                    parentNode = currNode
+                    currNode = currNode.right'''
+
 
     def inorder_traversal(self) -> Queue:
         """
@@ -256,6 +289,10 @@ class BST:
         """
         self._root = None
 
+    def search_helper(self, currNode, nextNode):
+        """
+
+        """
 
 # ------------------- BASIC TESTING -----------------------------------------
 
