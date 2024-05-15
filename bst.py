@@ -231,29 +231,12 @@ class BST:
         """
         Starts at root of tree and recursively iterates through tree looking for value
         """
+        if self._root is None:
+            return False
 
+        testNode = self.search_helper(self._root, value)
 
-
-        '''parentNode = self._root
-        currNode = self._root
-        #valuesChecked = Stack()
-
-        while currNode.left is not None or currNode.right is not None:
-            #if valuesChecked.is_empty() is False:
-                #for nodeValues in valuesChecked:
-
-            if currNode.left is not None:
-                if currNode.value == value:
-                    return True
-                else:
-                    parentNode = currNode
-                    currNode = currNode.left
-            if currNode.right is not None:
-                if currNode.value == value:
-                    return True
-                else:
-                    parentNode = currNode
-                    currNode = currNode.right'''
+        return testNode
 
 
     def inorder_traversal(self) -> Queue:
@@ -289,10 +272,26 @@ class BST:
         """
         self._root = None
 
-    def search_helper(self, currNode, nextNode):
+    def search_helper(self, currNode: BSTNode, value: object):
         """
+        Recursely iterates through in Prefix notation and returns current value as it climbs back up the tree
+        """
+        if currNode.value == value:
+            return True
 
-        """
+        if currNode.left is not None:
+            foundLeft = self.search_helper(currNode.left, value)
+            if foundLeft:
+                return True
+
+        if currNode.right is not None:
+            foundRight = self.search_helper(currNode.right, value)
+            if foundRight:
+                return True
+
+        return False
+
+
 
 # ------------------- BASIC TESTING -----------------------------------------
 
