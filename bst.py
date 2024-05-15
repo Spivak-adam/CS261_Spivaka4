@@ -1,9 +1,9 @@
-# Name:
-# OSU Email:
+# Name: Adam Spivak
+# OSU Email: Spivaka@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: 4
+# Due Date: 5-20-24
+# Description: Implementing BST structures and methods
 
 
 import random
@@ -21,9 +21,9 @@ class BSTNode:
         Initialize a new BST node
         DO NOT CHANGE THIS METHOD IN ANY WAY
         """
-        self.value = value   # to store node's data
-        self.left = None     # pointer to root of left subtree
-        self.right = None    # pointer to root of right subtree
+        self.value = value  # to store node's data
+        self.left = None  # pointer to root of left subtree
+        self.right = None  # pointer to root of right subtree
 
     def __str__(self) -> str:
         """
@@ -154,9 +154,34 @@ class BST:
 
     def add(self, value: object) -> None:
         """
-        TODO: Write your implementation
+        Adds node to BST based on if the value is > or < than the current node value, and iterates through tree until
+        end of tree is reached
         """
-        pass
+        newNode = BSTNode(value)
+
+        if self._root is None:  # Sets the root of the tree and then returns to grab the next value to be inserted
+            self._root = newNode
+            return
+
+        currNode = self._root
+
+        if currNode.value < newNode.value and currNode.right is None:
+            currNode.right = newNode
+        elif currNode.value > newNode.value and currNode.left is None:
+            currNode.left = newNode
+        else:
+            while currNode.left is not None or currNode.right is not None:
+                if newNode.value > currNode.value and currNode.right is not None:
+                    currNode = currNode.right
+                elif newNode.value < currNode.value and currNode.left is not None:
+                    currNode = currNode.left
+
+                if newNode.value < currNode.value and currNode.left is None:
+                    currNode.left = newNode
+                    break
+                elif newNode.value > currNode.value and currNode.right is None:
+                    currNode.right = newNode
+                    break
 
     def remove(self, value: object) -> bool:
         """
