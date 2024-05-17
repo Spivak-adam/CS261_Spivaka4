@@ -197,17 +197,30 @@ class BST:
         """
         Removes a node based on parameters, and uses helper functions to remove nodes with or without subtrees, hence
         the _remove_no_subtrees, _remove_one_subtree, and _remove_two_subtrees. This function also uses a recursive
-        helper funct search_recur, which takes in a value of a node, and if found returns the node itself. This
+        helper funct search_recur, which takes in a value of a node, and if found returns the node itself and its parent
+        node. This
         allows for faster search and removal of nodes
         """
         parentNode = self._root
+        newQueue = Queue()
+        successor = 0
 
-        #currNode = self.search_recur(self._root, parentNode, value)
+        #inOrder = self.inOrder_Queue(parentNode, newQueue)
 
-        #if currNode[1] is None:
-            #return False
-        #else:
-            #print("parent Node", currNode[2], "currNode", currNode[1])
+        # Remove node with no subtrees
+        #self._remove_no_subtrees()
+
+        # Remove node with one subtree
+
+
+        # Remove node with two subtrees
+        # Finds successor to exchange elements for removal of two subtrees
+        '''
+        Save for testing purposes
+        while inOrder.is_empty() is False:
+            testNumber = inOrder.dequeue()
+            if testNumber == value:
+                successor = inOrder.dequeue()'''
 
     # Consider implementing methods that handle different removal scenarios; #
     # you may find that you're able to use some of them in the AVL.          #
@@ -256,6 +269,9 @@ class BST:
         currNode = self._root
 
         inOrder = self.inOrder_Queue(currNode, newQueue)
+
+        if inOrder.is_empty():
+            return True
 
         return inOrder
 
