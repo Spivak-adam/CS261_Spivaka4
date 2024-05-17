@@ -195,9 +195,19 @@ class BST:
 
     def remove(self, value: object) -> bool:
         """
-        TODO: Write your implementation
+        Removes a node based on parameters, and uses helper functions to remove nodes with or without subtrees, hence
+        the _remove_no_subtrees, _remove_one_subtree, and _remove_two_subtrees. This function also uses a recursive
+        helper funct search_recur, which takes in a value of a node, and if found returns the node itself. This
+        allows for faster search and removal of nodes
         """
-        pass
+        parentNode = self._root
+
+        #currNode = self.search_recur(self._root, parentNode, value)
+
+        #if currNode[1] is None:
+            #return False
+        #else:
+            #print("parent Node", currNode[2], "currNode", currNode[1])
 
     # Consider implementing methods that handle different removal scenarios; #
     # you may find that you're able to use some of them in the AVL.          #
@@ -207,7 +217,7 @@ class BST:
 
     def _remove_no_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
         """
-        TODO: Write your implementation
+        Remove node with no subtrees by setting the parent node to none
         """
         # remove node that has no subtrees (no left or right nodes)
         pass
@@ -238,12 +248,16 @@ class BST:
 
         return testNode
 
-
     def inorder_traversal(self) -> Queue:
         """
-        TODO: Write your implementation
+        Returns an inorder Queue of elements from the BST using a recursive helper function
         """
-        pass
+        newQueue = Queue()
+        currNode = self._root
+
+        inOrder = self.inOrder_Queue(currNode, newQueue)
+
+        return inOrder
 
     def find_min(self) -> object:
         """
@@ -272,6 +286,22 @@ class BST:
         """
         self._root = None
 
+    def inOrder_Queue(self, currNode: BSTNode, inOrder: Queue):
+        """
+        Recursively iterates through tree and returns a queue of elements, which can be used for def contains() and
+        def inorder_traversal()
+        """
+
+        if currNode.left is not None:   # Traverse Left
+            self.inOrder_Queue(currNode.left, inOrder)
+
+        inOrder.enqueue(currNode.value)
+
+        if currNode.right is not None:  # Traverse Right
+            self.inOrder_Queue(currNode.right, inOrder)
+
+        return inOrder
+
     def search_helper(self, currNode: BSTNode, value: object):
         """
         Recursely iterates through in Prefix notation and returns current value as it climbs back up the tree
@@ -291,6 +321,29 @@ class BST:
 
         return False
 
+    def search_recur(self, parentNode: BSTNode, currNode: BSTNode, value: object):
+        """
+        Recursively finds a node within a BST and returns node if found, similar to search_helper. Instead of
+        returning true or false, return node itself
+        """
+
+        # SAVE PARENT NODE
+        if currNode.value == value:
+            return True, currNode, parentNode
+
+        if currNode.left is not None:
+            parentNode = currNode
+            foundLeft = self.search_recur(parentNode, currNode.left, value)
+            if foundLeft[0]:
+                return True, currNode, parentNode
+
+        if currNode.right is not None:
+            parentNode = currNode
+            foundRight = self.search_recur(parentNode, currNode.right, value)
+            if foundRight[0]:
+                return True, currNode, parentNode
+
+        return False, None, None
 
 
 # ------------------- BASIC TESTING -----------------------------------------
