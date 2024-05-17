@@ -270,9 +270,6 @@ class BST:
 
         inOrder = self.inOrder_Queue(currNode, newQueue)
 
-        if inOrder.is_empty():
-            return True
-
         return inOrder
 
     def find_min(self) -> object:
@@ -307,6 +304,8 @@ class BST:
         Recursively iterates through tree and returns a queue of elements, which can be used for def contains() and
         def inorder_traversal()
         """
+        if self.get_root() is None:
+            return inOrder
 
         if currNode.left is not None:   # Traverse Left
             self.inOrder_Queue(currNode.left, inOrder)
